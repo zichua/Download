@@ -18,7 +18,7 @@ class HttpDown
         HttpDown(string _url,string _path,string _name);
         HttpDown(string _url);
 
-        int Download();
+        int DownLoad();
         string filename; //文件保存名
         string filepath; //文件保存路径
         char *current; //文件校验码
@@ -29,6 +29,6 @@ class HttpDown
         long Position(int); //计算文件起始位置
         void Print(int,int); //显示下载进度
         HttpOperation hp;
-        shared_ptr<ThreadPool> threadpool;
+        shared_ptr<ThreadPool> threadpoo0l;
 
 };
