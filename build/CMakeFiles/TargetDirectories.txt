@@ -1,0 +1,3 @@
+/home/yiyi/桌面/test/down_01/build/CMakeFiles/rebuild_cache.dir
+/home/yiyi/桌面/test/down_01/build/CMakeFiles/Download.dir
+/home/yiyi/桌面/test/down_01/build/CMakeFiles/edit_cache.dir
