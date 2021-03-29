@@ -65,7 +65,7 @@ void ThreadDownLoad(long start,long end,HttpOperation ho,HttpDown *hd)
     ho.SendHttpHead(start,end);
     ho.ReadHttpHead();
 
-    char buf[size];　//缓冲区
+    char buf[size];//缓冲区
     long s = 0;
 
     while(s < size)
@@ -110,7 +110,7 @@ int HttpDown::DownLoad()
 
     //显示文件信息数据
     cout << "文件 : " + hp.filename << endl;
-    cout << "来自 : " + hp.host < endl;
+    cout << "来自 : " + hp.host << endl;
     cout << "大小 : " + ((hp.size>1024)?(to_string(hp.size/1024)+"k"):(to_string(hp.size))) << endl;
     cout << "类型 : " + hp.type << endl;
     cout << "路径 : " + filepath << endl;
@@ -133,7 +133,7 @@ int HttpDown::DownLoad()
     if(part > 100)
     {
         //根据文件大小初始化线程池
-        threadpool = make_shared<ThreadPool>)(part/3);
+        threadpool = make_shared<ThreadPool>(part/3);
     }
 
     //开始多线程下载文件，每个线程下载content字节
@@ -180,10 +180,10 @@ int HttpDown::DownLoad()
 
 void HttpDown::Print(int current,int final)
 {
-    current = 100*((double)Current/final);
+    current = 100*((double)current/final);
     final = 100;
 
-    print("[");
+    printf("[");
     for(int i=0;i<current;++i)
         printf("#");
     for(int i=0;i<final-current;++i)

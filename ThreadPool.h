@@ -18,24 +18,24 @@ class ThreadPool
 
         //添加任务函数到任务队列
         template<class F,class...Args>
-        auto Append(F&& f,Args&&... args)->future<typename result_of<Args...>::type>
-        {
-            //获取返回值类型
-            using return_type = typename result_of<F(Args...)>::type;
-            //获取任务函数
-            auto task = make_shared<packaged_task<return_type()>>(bind(forward<F>(f),forward<Args>(args)...));
+        auto Append(F&& f,Args&&... args)->future<typename result_of<F(Args...)>::type>
+        // {
+        //     //获取返回值类型
+        //     using return_type = typename result_of<F(Args...)>::type;
+        //     //获取任务函数
+        //     auto task = make_shared<packaged_task<return_type()>>(bind(forward<F>(f),forward<Args>(args)...));
         
-            future<return_type> res = task->get_future();
+        //     future<return_type> res = task->get_future();
 
-            unique_lock<mutex> lock(this->tasks_mutex);
-            this->tasks.emplace([task](){(*task)();});
-            lock.unlock();
+        //     unique_lock<mutex> lock(this->tasks_mutex);
+        //     this->tasks.emplace([task](){(*task)();});
+        //     lock.unlock();
 
-            this->condition.notify_one();
+        //     this->condition.notify_one();
 
-            return res;
-        }
-
+        //     return res;
+        // }
+        ;
         void Wait(); //等待所有线程任务结束
 
         ~ThreadPool();
@@ -49,3 +49,22 @@ class ThreadPool
         bool stop;
 
 };
+
+template<class F,class ...Args>
+auto ThreadPool::Append(F&& f,Args&&... args)->future<typename result_of<F(Args...)>::type>
+{
+    //获取返回值类型
+    using return_type = typename result_of<F(Args...)>::type;
+    //获取任务函数
+    auto task = make_shared<packaged_task<return_type()>>(bind(forward<F>(f),forward<Args>(args)...));
+
+    future<return_type> res = task->get_future();
+
+    unique_lock<mutex> lock(this->tasks_mutex);
+    this->tasks.emplace([task](){(*task)();});
+    lock.unlock();
+
+    this->condition.notify_one();
+
+    return res;
+}

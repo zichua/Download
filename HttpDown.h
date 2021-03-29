@@ -29,6 +29,6 @@ class HttpDown
         long Position(int); //计算文件起始位置
         void Print(int,int); //显示下载进度
         HttpOperation hp;
-        shared_ptr<ThreadPool> threadpoo0l;
+        shared_ptr<ThreadPool> threadpool;
 
 };
